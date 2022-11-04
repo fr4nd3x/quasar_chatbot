@@ -10,14 +10,12 @@
       :key="i"
       color="primary"
       icon="mail"
-      :label="b"
+      :label="b.label"
       @click="doc(b)"
     />
+    <input v-model=" input" placeholder="edit me">
+    <p>Message is: {{  }}</p>
   </div>
-
-
-
-  
 </template>
 
 <script lang="ts">
@@ -60,7 +58,7 @@ export default defineComponent({
 
   setup(props) {
     const buttons = ref([]);
-    const data = ref({ msg: '', ID: 1 }) ;
+    const data = ref({ msg: '', ID: 1 });
     const arr: any[] = [];
     const msgs = reactive(arr);
 
@@ -68,7 +66,7 @@ export default defineComponent({
       if (option) msgs.push(option);
       axios
         .post('http://localhost:5000/', {
-          option: !option.target ? option : '',
+          option: option.next ? option.next : '',
           ID: data.value.ID,
         })
         .then((r: any) => {
@@ -77,9 +75,9 @@ export default defineComponent({
           buttons.value = r.data.options;
           data.value = r.data;
         });
+
     }
     doc('');
-
     return {
       doc,
       msgs,
