@@ -2,20 +2,10 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
 
         <q-toolbar-title>
-          Quasar App
+          Pruebas
         </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
     </q-header>
 
@@ -47,7 +37,8 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import EssentialLink from 'components/EssentialLink.vue';
+//import EssentialLink from 'components/EssentialLink.vue';
+
 
 const linksList = [
   {
@@ -98,7 +89,7 @@ export default defineComponent({
   name: 'MainLayout',
 
   components: {
-    EssentialLink
+    //EssentialLink
   },
 
   setup () {

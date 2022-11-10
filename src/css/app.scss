@@ -1,1 +1,21 @@
 // app global css in SCSS form
+
+.msg {
+  padding: 5px;
+  margin: 10px;
+  border: 3px solid gray;
+  border-radius: 6px;
+  box-shadow: 21px 5px 10px 1px #b2e639, 0.5px 0.5px #000;
+}
+.yellow {
+  background-color: #8ff3f8;
+}
+img{
+  padding: center;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 18px;
+  padding: 5px;
+  width: 150px;
+}
+

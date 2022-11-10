@@ -1,4 +1,7 @@
 <template>
+  <div class="image">
+    <img src="/bot.jpg"/>
+  </div>
   <div>
     <div
       v-for="(item, id) in msgs"
@@ -38,7 +41,7 @@ function useClickCount() {
 
   return { clickCount, increment };
 }
-function useDisplayTodo(todos: Ref<Todo[]>) {
+function useDisplayTodo(todos: ref<Todo[]>) {
   const todoCount = computed(() => todos.value.length);
   return { todoCount };
 }
@@ -65,7 +68,7 @@ export default defineComponent({
   setup(props) {
     const buttons = ref([]);
     const hola = ref('<b>Tron</b>');
-    const data = ref({ msg: '', ID: 1 });
+    const data = ref({ msg: '', ID: 1,continue : '' });
     const arr: any[] = [];
     const msgs = reactive(arr);
 
@@ -74,6 +77,7 @@ export default defineComponent({
         option.msg = option.label;
         msgs.push(option);
       }
+
       axios
         .post('http://localhost:5000/', {
           option: option.next ? option.next : '',
@@ -87,7 +91,6 @@ export default defineComponent({
           data.value = r.data;
         });
     }
-
     doc('');
 
     return {
@@ -102,14 +105,4 @@ export default defineComponent({
   },
 });
 </script>
-<style>
-.msg {
-  padding: 5px;
-  margin: 5px;
-  border: 3px solid gray;
-  border-radius: 3px;
-}
-.yellow {
-  background-color: coral;
-}
-</style>
+
