@@ -1,21 +1,27 @@
 <template>
   <div>
-    <ul>
-      <li v-for="(todo, id) in msgs" :key="id" @click="increment">
-        {{ todo }}
-      </li>
-    </ul>
-    <q-btn
-      v-for="(b, i) in buttons"
-      :key="i"
-      color="primary"
-      icon="mail"
-      :label="b.label"
-      @click="doc(b)"
-    />
-    <input v-model=" input" placeholder="edit me">
-    <p>Message is: {{  }}</p>
+    <div
+      v-for="(item, id) in msgs"
+      :key="id"
+      @click="increment"
+      class="msg"
+      :class="item.label ? 'yellow' : ''"
+    >
+      <div v-html="item.msg"></div>
+
+      <a v-if="item.href" :href="item.href">{{ item.href }}</a>
+    </div>
   </div>
+
+  <q-btn
+    v-for="(b, i) in buttons"
+    :key="i"
+    color="primary"
+    :label="b.label"
+    @click="doc(b)"
+  />
+
+  <p>Message is: {{}}</p>
 </template>
 
 <script lang="ts">
@@ -58,28 +64,35 @@ export default defineComponent({
 
   setup(props) {
     const buttons = ref([]);
+    const hola = ref('<b>Tron</b>');
     const data = ref({ msg: '', ID: 1 });
     const arr: any[] = [];
     const msgs = reactive(arr);
 
     function doc(option: any) {
-      if (option) msgs.push(option);
+      if (option) {
+        option.msg = option.label;
+        msgs.push(option);
+      }
       axios
         .post('http://localhost:5000/', {
           option: option.next ? option.next : '',
+
           ID: data.value.ID,
         })
         .then((r: any) => {
-          msgs.push(r.data.msg);
+          msgs.push(r.data);
 
           buttons.value = r.data.options;
           data.value = r.data;
         });
-
     }
+
     doc('');
+
     return {
       doc,
+      hola,
       msgs,
       buttons,
       data,
@@ -89,3 +102,14 @@ export default defineComponent({
   },
 });
 </script>
+<style>
+.msg {
+  padding: 5px;
+  margin: 5px;
+  border: 3px solid gray;
+  border-radius: 3px;
+}
+.yellow {
+  background-color: coral;
+}
+</style>
