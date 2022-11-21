@@ -1,6 +1,6 @@
 <template>
   <div class="image">
-    <img src="/bot.jpg"/>
+    <img src="/bot.jpg" />
   </div>
   <div>
     <div
@@ -68,7 +68,7 @@ export default defineComponent({
   setup(props) {
     const buttons = ref([]);
     const hola = ref('<b>Tron</b>');
-    const data = ref({ msg: '', ID: 1,continue : '' });
+    const data = ref({ msg: '', ID: 1, pass: '' });
     const arr: any[] = [];
     const msgs = reactive(arr);
 
@@ -77,7 +77,6 @@ export default defineComponent({
         option.msg = option.label;
         msgs.push(option);
       }
-
       axios
         .post('http://localhost:5000/', {
           option: option.next ? option.next : '',
@@ -93,8 +92,26 @@ export default defineComponent({
     }
     doc('');
 
+    function next(pass: any) {
+      if (pass) {
+        Option.mgs = option.label;
+        msgs.push(pass);
+      }
+      axios
+        .post('http://localhost:5000/', {
+          pass: pass.pass ? pass.pass : '',
+          ID: data.value.ID,
+        })
+        .then((r: any) => {
+          msgs.push(r.data);
+          data.value = r.data;
+        });
+    }
+    next('');
+
     return {
       doc,
+      next,
       hola,
       msgs,
       buttons,
@@ -105,4 +122,3 @@ export default defineComponent({
   },
 });
 </script>
-
